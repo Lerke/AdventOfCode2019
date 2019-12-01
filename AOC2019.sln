@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day1-RocketEquation", "Day1-RocketEquation\Day1-RocketEquation.fsproj", "{C6935049-C079-4C4C-960A-82736589192E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day1-RocketEquation.Tests", "Day1-RocketEquation.Tests\Day1-RocketEquation.Tests.fsproj", "{874D72E2-DFD7-48A7-A906-545C1DEA6509}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6935049-C079-4C4C-960A-82736589192E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6935049-C079-4C4C-960A-82736589192E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6935049-C079-4C4C-960A-82736589192E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6935049-C079-4C4C-960A-82736589192E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{874D72E2-DFD7-48A7-A906-545C1DEA6509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{874D72E2-DFD7-48A7-A906-545C1DEA6509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{874D72E2-DFD7-48A7-A906-545C1DEA6509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{874D72E2-DFD7-48A7-A906-545C1DEA6509}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
