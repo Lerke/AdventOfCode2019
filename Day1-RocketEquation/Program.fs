@@ -32,5 +32,5 @@ let main argv =
         printfn "Total space ship fuel: %d" spaceshipFuel
         0
     | _ ->
-        printfn "Please input a number."
+        printfn "Please input path to input file."
         1
