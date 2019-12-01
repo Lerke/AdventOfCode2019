@@ -3,11 +3,16 @@ open System.IO
 
 /// Calculate the required fuel for given spaceship module with a certain mass.
 let rec calculateModuleFuel mass =
-    let fuelToUse = (Convert.ToInt32(floor (float (mass) / 3.0))) - 2
-    if fuelToUse > 0
-        then fuelToUse + calculateModuleFuel fuelToUse
-        else 0 // Wishing really hard!
-    
+    mass
+    |> float
+    |> fun fuel -> fuel / 3.0 // Divide mass by three
+    |> floor                  // Floor division
+    |> Convert.ToInt32        // Go back to int.
+    |> fun fuel -> fuel - 2   // Subtract 2
+    |> fun fuel ->            // If amount of fuel is 0 or less, return 0.
+        if fuel <= 0          // Else, calculate the extra mass this fuel would
+        then 0                // Add.
+        else fuel + calculateModuleFuel fuel
 
 /// Read an input file, convert every line to a whole number.
 let loadInputFile filepath =
