@@ -5,5 +5,5 @@ With the goal of experimenting a bit with new languages and tools!
 
 | Day | Language | Solution | Test |
 | --- | -------- | -------- | ---- |
-|  1  | F#       | Day1-RocketEquation | Day1-RocketEquation.Tests |
+|  1  | F#       | [Day1-RocketEquation](https://github.com/Lerke/AdventOfCode2019/tree/master/Day1-RocketEquation) | [Day1-RocketEquation.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day1-RocketEquation.Tests) |
 |  2  | ..       | ..       | ..   |
