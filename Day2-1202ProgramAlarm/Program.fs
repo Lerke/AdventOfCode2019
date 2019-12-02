@@ -43,7 +43,6 @@ let puzzleTwo input target =
                           ((updateMemoryLocation
                                 (updateMemoryLocation input 1 noun)
                                 2 verb))).Item(0) = target)
-    printfn "%A" result
     match result with
     | (noun,verb) ->
         printfn "Answer Puzzle Two: (%d, %d) => 100 * %d + %d = %d" noun verb noun verb (100 * noun + verb)
