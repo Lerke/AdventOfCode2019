@@ -18,10 +18,6 @@ let rec fastForward number list =
 // Given a list of numbers, check if it has an occurence of double digits.
 let rec passwordHasAdjacentDigits (password: int list) =
     match password with
-    | [4;5;] -> printfn "Gottem"
-    | _ -> printfn ""
-    
-    match password with
     | x::y::z::xs when x = y && y <> z -> true                             // This is a isolated group of two. We don't have to search further.
     | x::y::z::[] when x <> y && y = z -> true                             // Capture groups at the very end
     | x::y::z::xs when x = y && y = z -> passwordHasAdjacentDigits (fastForward x password) // This group is too large, skip ahead.
