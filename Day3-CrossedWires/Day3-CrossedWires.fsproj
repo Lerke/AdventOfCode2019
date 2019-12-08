@@ -3,12 +3,16 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Day1_RocketEquation</RootNamespace>
+        <RootNamespace>Day3_CrossedWires</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="ArrayExtensions.fs" />
         <Compile Include="Program.fs" />
-        <Content Include="input.txt">
+        <Content Include="simple_input">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="input">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <Content Include="README.MD" />

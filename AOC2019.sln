@@ -8,6 +8,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day2-1202ProgramAlarm", "Da
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day2-1202ProgramAlarm.Tests", "Day2-1202ProgramAlarm.Tests\Day2-1202ProgramAlarm.Tests.fsproj", "{28563EAA-194F-4A1C-835A-94C0A68AA713}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day3-CrossedWires", "Day3-CrossedWires\Day3-CrossedWires.fsproj", "{DA6A18F7-D842-44B8-91D9-124BBCA45023}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day3-CrossedWires.Tests", "Day3-CrossedWires.Tests\Day3-CrossedWires.Tests.fsproj", "{3599663A-9643-45CE-8050-32640F261688}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{28563EAA-194F-4A1C-835A-94C0A68AA713}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28563EAA-194F-4A1C-835A-94C0A68AA713}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28563EAA-194F-4A1C-835A-94C0A68AA713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA6A18F7-D842-44B8-91D9-124BBCA45023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA6A18F7-D842-44B8-91D9-124BBCA45023}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA6A18F7-D842-44B8-91D9-124BBCA45023}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA6A18F7-D842-44B8-91D9-124BBCA45023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3599663A-9643-45CE-8050-32640F261688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3599663A-9643-45CE-8050-32640F261688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3599663A-9643-45CE-8050-32640F261688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3599663A-9643-45CE-8050-32640F261688}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

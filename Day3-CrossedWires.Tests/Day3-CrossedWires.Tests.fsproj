@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Day2_1202ProgramAlarm.Tests</RootNamespace>
+        <RootNamespace>Day3_CrossedWires.Tests</RootNamespace>
 
         <IsPackable>false</IsPackable>
         <GenerateProgramFile>false</GenerateProgramFile>
@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Day2-1202ProgramAlarm\Day2-1202ProgramAlarm.fsproj" />
+      <ProjectReference Include="..\Day3-CrossedWires\Day3-CrossedWires.fsproj" />
     </ItemGroup>
 
 </Project>
