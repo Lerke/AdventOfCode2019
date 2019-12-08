@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Day5_SunnyWithAChanceOfAsteroids.Tests</RootNamespace>
+        <RootNamespace>Day6_UniversalOrbitMap.Tests</RootNamespace>
 
         <IsPackable>false</IsPackable>
         <GenerateProgramFile>false</GenerateProgramFile>
@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Day5-SunnyWithAChanceOfAsteroids\Day5-SunnyWithAChanceOfAsteroids.fsproj" />
+      <ProjectReference Include="..\Day6-UniversalOrbitMap\Day6-UniversalOrbitMap.fsproj" />
     </ItemGroup>
 
 </Project>
