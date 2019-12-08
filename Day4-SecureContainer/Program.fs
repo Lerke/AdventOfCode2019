@@ -1,40 +1,32 @@
 ﻿open FSharp.Text.RegexProvider
 
-(*
---- Day 4: Secure Container ---
-
-You arrive at the Venus fuel depot only to discover it's protected by a password. The Elves had written the password on a sticky note, but someone threw it out.
-
-However, they do remember a few key facts about the password:
-
-    It is a six-digit number.
-    The value is within the range given in your puzzle input.
-    Two adjacent digits are the same (like 22 in 122345).
-    Going from left to right, the digits never decrease; they only ever increase or stay the same (like 111123 or 135679).
-
-Other than the range rule, the following are true:
-
-    111111 meets these criteria (double 11, never decreases).
-    223450 does not meet these criteria (decreasing pair of digits 50).
-    123789 does not meet these criteria (no double).
-
-How many different passwords within the range given in your puzzle input meet these criteria?
-
-Your puzzle input is 402328-864247.
-*)
-
 // I snipe both numbers given as input with a regular expression.
 type inputRegex = Regex< @"^(?<number>\d+)\-(?<number2>\d+)$" >
 
 let passwordIsNDigits (n: int) (password: int list) =
     password.Length = n
 
+// Given a number, fast forward through this list until we reach the end or a different number
+// Return the new list from that point, including the last occurence of number.
+let rec fastForward number list =
+    match list with
+    | x::y::xs when x = number && y = number -> fastForward number (y::xs)
+    | x::y::xs when x = number && y <> number -> (number::y::xs)
+    | x::[] -> []
+    | [] -> []
+
 // Given a list of numbers, check if it has an occurence of double digits.
 let rec passwordHasAdjacentDigits (password: int list) =
     match password with
-    | x::y::xs when x = y -> true
-    | x::y::xs when x <> y -> passwordHasAdjacentDigits (y::xs)
-    | _ -> false
+    | [4;5;] -> printfn "Gottem"
+    | _ -> printfn ""
+    
+    match password with
+    | x::y::z::xs when x = y && y <> z -> true                             // This is a isolated group of two. We don't have to search further.
+    | x::y::z::[] when x <> y && y = z -> true                             // Capture groups at the very end
+    | x::y::z::xs when x = y && y = z -> passwordHasAdjacentDigits (fastForward x password) // This group is too large, skip ahead.
+    | x::y::xs when x <> y -> passwordHasAdjacentDigits (y::xs)            // No match, seek further
+    | _ -> false                                                           // No result found.
 
 // Given a list of numbers, check if each consecutive number is equal or greater than the previous.
 let rec passwordIsAscending (highest:int) (password: int list) =
@@ -76,6 +68,7 @@ let main argv =
             number <- n; number2 <- n2
             [ number .. number2 ]
         |> List.filter (fun x -> meetsCriteria x)
-        |> fun x -> printfn "Number of passwords between %d - %d that fit the criteria: %d" number number2 x.Length
+        |> fun x -> printfn "Number of passwords between %d - %d that fit the criteria: %d" number number2 x.Length; x
+        |> fun x -> List.iter (fun password -> printfn "%d" password) x
     | _ -> printf "Usage: dotnet run <lower bound:int> <upper bound:int>"
     0

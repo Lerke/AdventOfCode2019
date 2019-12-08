@@ -50,11 +50,17 @@ let ``Test Failing Adjacent Digits Passwords``() =
     |> List.iter (fun numbers -> passwordHasAdjacentDigits numbers |> should equal false)
 
 [<Fact>]
-let ``Test Criteria Matches Part 1``() =
-    [ 111111; 122345; 111123; 135677 ]
-    |> List.iter (fun numbers -> meetsCriteria numbers |> should equal true)
+let ``Test Fast Forward``() =
+    [ ([ 1; 1; 1; 1; 4; 4 ], 1) ]
+    |> List.iter (fun (numbers, expected) -> (fastForward expected numbers) |> should equal [1; 4; 4])
 
 [<Fact>]
-let ``Test Failing Criteria Matches Part 1``() =
-    [ 223450; 123789 ]
+let ``Test Failing Criteria Matches``() =
+    [ 223450; 123789; 111111; 123444 ]
     |> List.iter (fun numbers -> meetsCriteria numbers |> should equal false)
+
+
+[<Fact>]
+let ``Test Criteria Matches Part 1``() =
+    [ 122345; 135677; 111122 ]
+    |> List.iter (fun numbers -> meetsCriteria numbers |> should equal true)
