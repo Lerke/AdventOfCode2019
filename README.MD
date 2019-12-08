@@ -8,4 +8,5 @@ With the goal of experimenting a bit with new languages and tools!
 |  1  | F#       | [Day1-RocketEquation](https://github.com/Lerke/AdventOfCode2019/tree/master/Day1-RocketEquation) | [Day1-RocketEquation.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day1-RocketEquation.Tests) |
 |  2  | F#       | [Day2-1202ProgramAlarm](https://github.com/Lerke/AdventOfCode2019/tree/master/Day2-1202ProgramAlarm)       | [Day2-1202ProgramAlarm.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day2-1202ProgramAlarm.Tests)   |
 |  3  | F#       | [Day3-CrossedWires](https://github.com/Lerke/AdventOfCode2019/tree/master/Day3-CrossedWires)       | [Day3-CrossedWires.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day3-CrossedWires.Tests)   |
-|  4  | ...      | | |
+|  4  | F#      | [Day4-SecureContainer](https://github.com/Lerke/AdventOfCode2019/tree/master/Day4-SecureContainer) | [Day4-SecureContainer.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day4-SecureContainer.Tests) |
+|  5  | ...      | | |
