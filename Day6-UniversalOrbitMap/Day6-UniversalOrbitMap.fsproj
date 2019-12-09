@@ -14,6 +14,7 @@
         <Content Include="input_puzzle">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="README.MD" />
     </ItemGroup>
 
     <ItemGroup>
