@@ -20,6 +20,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day5-SunnyWithAChanceOfAste
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day6-UniversalOrbitMap", "Day6-UniversalOrbitMap\Day6-UniversalOrbitMap.fsproj", "{931F5233-9DC1-4B9D-9AA6-9A6D5D637EA9}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day7-AmplificationCircuit", "Day7-AmplificationCircuit\Day7-AmplificationCircuit.fsproj", "{6929DED8-1312-4D88-BE38-B1529D4D5FA0}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day7-AmplificationCircuit.Tests", "Day7-AmplificationCircuit.Tests\Day7-AmplificationCircuit.Tests.fsproj", "{8257FAAD-11DD-44FF-A9FF-081793D01558}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +70,13 @@ Global
 		{931F5233-9DC1-4B9D-9AA6-9A6D5D637EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{931F5233-9DC1-4B9D-9AA6-9A6D5D637EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{931F5233-9DC1-4B9D-9AA6-9A6D5D637EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6929DED8-1312-4D88-BE38-B1529D4D5FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6929DED8-1312-4D88-BE38-B1529D4D5FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6929DED8-1312-4D88-BE38-B1529D4D5FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6929DED8-1312-4D88-BE38-B1529D4D5FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8257FAAD-11DD-44FF-A9FF-081793D01558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8257FAAD-11DD-44FF-A9FF-081793D01558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8257FAAD-11DD-44FF-A9FF-081793D01558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8257FAAD-11DD-44FF-A9FF-081793D01558}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
