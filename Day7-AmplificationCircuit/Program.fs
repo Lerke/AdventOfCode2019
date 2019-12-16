@@ -1,4 +1,5 @@
 ﻿open System
+open System.IO
 open FSharp.Collections.ParallelSeq
 
 /// Possible operation types of our simple computer
@@ -18,10 +19,21 @@ type ParameterMode =
     | Position = 0    // Use parameter as an index into memory
     | Immediate = 1   // Use parameter as a value.
 
-type machine = { memory: int list
+type AmplifyMode =
+    | Normal
+    | Feedback
+
+type StopReason =
+    | Output
+    | Halt
+
+type Machine = { memory: int list
                  ip: int
                  input: int list
-                 output: int Option }
+                 output: MachineOutput Option
+                 mode: AmplifyMode }
+and MachineOutput = { value: int
+                      reason: StopReason }
 
 let rec getIndividualDigits (numList: int list) number =
     match number with
@@ -87,11 +99,12 @@ let getModes (memory: List<int>) (ip: int) (modes: ParameterMode list) num =
     
 
 /// Calculate the next memory layout of the computer.
-let rec calculateNext (machineState: machine) =
+let rec calculateNext (machineState: Machine) =
     let memory = machineState.memory
     let input = machineState.input
     let ip = machineState.ip
     let output = machineState.output
+    let mode = machineState.mode
     let operation = memory.Item(ip)
     match getOperation operation with
     | (OperationType.Add, modes) ->
@@ -99,72 +112,96 @@ let rec calculateNext (machineState: machine) =
         calculateNext { memory = updateMemoryLocation memory (o3) (o1 + o2)
                         input = input
                         output = output
-                        ip = (ip + 4) }
+                        ip = (ip + 4)
+                        mode = mode }
     | (OperationType.Multiply, modes) ->
         let (o1, o2, o3) = getModes memory ip modes 3
         calculateNext { memory = updateMemoryLocation memory (o3) (o1 * o2)
                         input = input
                         output = output
-                        ip = (ip + 4) }
+                        ip = (ip + 4) 
+                        mode = mode }
     | (OperationType.Store, modes) ->
         let (o1, o2, o3) = getModes memory ip modes 1
         calculateNext { memory = updateMemoryLocation memory (o1) (input.Head)
                         input = input.Tail
                         output = output
-                        ip = (ip + 2) }
+                        ip = (ip + 2) 
+                        mode = mode }
     | (OperationType.Output, modes) ->
         let (o1, o2, o3) = getModes memory ip modes 2
-        calculateNext { memory = memory
-                        input = input
-                        output = Some o1
-                        ip = (ip + 2) }
+        let outputState = { memory = memory
+                            input = input
+                            output = Some { value = o1
+                                            reason = StopReason.Output }
+                            ip = (ip + 2) 
+                            mode = mode }
+        match mode with
+        | AmplifyMode.Normal -> calculateNext outputState
+        | AmplifyMode.Feedback -> outputState
     | (OperationType.JumpIfTrue, modes) ->
         let (o1, o2, o3) = getModes memory ip modes 3
         calculateNext { memory = memory
                         input = input
-                        output = Some o1
-                        ip = if o1 <> 0 then o2 else (ip + 3) }
+                        output = output
+                        ip = if o1 <> 0 then o2 else (ip + 3) 
+                        mode = mode }
     | (OperationType.JumpIfFalse, modes) ->
         let (o1, o2, o3) = getModes memory ip modes 3
         calculateNext { memory = memory
                         input = input
-                        output = Some o1
-                        ip = if o1 = 0 then o2 else (ip + 3) }
+                        output = output
+                        ip = if o1 = 0 then o2 else (ip + 3) 
+                        mode = mode }
     | (OperationType.LessThan, modes) ->
         let (o1, o2, o3) = getModes memory ip modes 3
         calculateNext { memory = updateMemoryLocation memory (o3) (if o1 < o2 then 1 else 0)
                         input = input
                         output = output
-                        ip = (ip + 4) }
+                        ip = (ip + 4) 
+                        mode = mode }
     | (OperationType.Equals, modes) ->
         let (o1, o2, o3) = getModes memory ip modes 3
         calculateNext { memory = updateMemoryLocation memory (o3) (if o1 = o2 then 1 else 0)
                         input = input
                         output = output
-                        ip = (ip + 4) }
-    | (OperationType.Stop, _) -> machineState
+                        ip = (ip + 4) 
+                        mode = mode }
+    | (OperationType.Stop, _) -> { machineState with output = Some { value = machineState.output.Value.value
+                                                                     reason = StopReason.Halt } }
     | _ -> failwithf "Unsupported operation: %A" operation
 
 /// Start calculating until halt given a certain memory map. Assume Instruction Pointer starts at 0
-let doCalculation (machineState: machine) =
+let doCalculation (machineState: Machine) =
     calculateNext machineState
     
-let rec amplifyNext (machineState: machine) (phaseSettings: List<int>) =
-    match phaseSettings with
-    | x::xs ->
-        let newState = doCalculation { machineState with input =  ([ x ] @ machineState.input) }
+let rec amplifyNext (machines: Machine list) (phaseSettings: List<int>) (results: Machine list) =
+    match machines with
+    | x::y::xs ->
+        let newState = doCalculation { x with input =  ( (if phaseSettings.IsEmpty then [] else [ phaseSettings.Head ])@ x.input) }
         let output = match newState.output with
-                     | Some out -> [ out ]
-                     | None -> []
-        amplifyNext { newState with input = output
-                                    ip = 0
-                                    output = None } xs
-    | [] -> { machineState with output = Some (List.head machineState.input) }
-    
-let amplify (machineState: machine) (phaseSettings: List<int>)  =
-    amplifyNext { machineState with ip = 0
-                                    input = [ 0 ] } phaseSettings
+                     | Some out -> [ out.value ]
+                     | None -> [ ]
+        let outResult = amplifyNext ({ y with input = output } :: xs) (if phaseSettings.IsEmpty then [] else phaseSettings.Tail) results
+        [newState] @ outResult
+    | x::[] -> 
+        let newState = doCalculation { x with input =  ((if phaseSettings.IsEmpty then [] else [ phaseSettings.Head ]) @ x.input) }
+        [newState]
+    | [] -> []
 
+let rec amplifyNextFeedback (machines: Machine list) (phaseSettings: List<int>) (results: Machine list) =
+    match amplifyNext machines phaseSettings results with
+    | xs ->
+        let x::y = xs
+        if (List.last xs).output.Value.reason = StopReason.Output then amplifyNextFeedback ({ x with input = [(List.last xs).output.Value.value] } :: y) [] [] else xs
+    
+
+let amplify (machineState: Machine) (phaseSettings: List<int>) (mode: AmplifyMode)  =
+    let machineList = List.init (List.length phaseSettings) (fun _ -> { machineState with ip = 0 })
+    let initial = machineList.Head
+    let machines = { initial with input = [ 0 ] } :: machineList.Tail
+    if mode = AmplifyMode.Normal then amplifyNext machines phaseSettings [] else amplifyNextFeedback machines phaseSettings []
+    
 let rec insertions x = function
     | []             -> [[x]]
     | (y :: ys) as l -> (x::l)::(List.map (fun x -> y::x) (insertions x ys))
@@ -176,22 +213,39 @@ let rec permutations = function
 let getSearchspace (amplifiers: int) =
     [0 .. amplifiers-1]
     |> permutations
+
+let getSearchspaceFeedback (amplifiers: int) =
+    [5 .. amplifiers + 4 ]
+    |> permutations
     
-let calculateLargestResult (machineState: machine) (searchspace: seq<int list>) =
+let calculateLargestResult (machineState: Machine) (searchspace: seq<int list>) =
     searchspace
-    |> Seq.map (fun x -> (amplify machineState (Seq.toList x)))
+    |> Seq.map (fun x -> List.last (amplify machineState (Seq.toList x) machineState.mode))
     |> Seq.map (fun x -> x.output)
     |> Seq.filter (fun x -> x.IsSome)
     |> Seq.map (fun x -> x.Value)
     |> Seq.max
+
+let readInput path =
+    File.ReadAllText(path).Split(',')
+    |> Array.map (fun x -> int x)
+    |> Array.toList
   
 [<EntryPoint>]
 let main argv =
-    let input = Array.toList [| 3;8;1001;8;10;8;105;1;0;0;21;38;59;76;89;106;187;268;349;430;99999;3;9;1002;9;3;9;101;2;9;9;1002;9;4;9;4;9;99;3;9;1001;9;5;9;1002;9;5;9;1001;9;2;9;1002;9;3;9;4;9;99;3;9;1001;9;4;9;102;4;9;9;1001;9;3;9;4;9;99;3;9;101;4;9;9;1002;9;5;9;4;9;99;3;9;1002;9;3;9;101;5;9;9;1002;9;3;9;4;9;99;3;9;102;2;9;9;4;9;3;9;1002;9;2;9;4;9;3;9;1002;9;2;9;4;9;3;9;101;2;9;9;4;9;3;9;1002;9;2;9;4;9;3;9;102;2;9;9;4;9;3;9;101;1;9;9;4;9;3;9;1001;9;1;9;4;9;3;9;1002;9;2;9;4;9;3;9;101;2;9;9;4;9;99;3;9;1002;9;2;9;4;9;3;9;101;2;9;9;4;9;3;9;1002;9;2;9;4;9;3;9;101;1;9;9;4;9;3;9;102;2;9;9;4;9;3;9;102;2;9;9;4;9;3;9;101;2;9;9;4;9;3;9;101;2;9;9;4;9;3;9;102;2;9;9;4;9;3;9;1001;9;2;9;4;9;99;3;9;1002;9;2;9;4;9;3;9;1001;9;2;9;4;9;3;9;101;1;9;9;4;9;3;9;101;2;9;9;4;9;3;9;101;2;9;9;4;9;3;9;102;2;9;9;4;9;3;9;1001;9;2;9;4;9;3;9;102;2;9;9;4;9;3;9;1001;9;1;9;4;9;3;9;1001;9;2;9;4;9;99;3;9;1001;9;2;9;4;9;3;9;102;2;9;9;4;9;3;9;1001;9;2;9;4;9;3;9;102;2;9;9;4;9;3;9;101;2;9;9;4;9;3;9;1002;9;2;9;4;9;3;9;1002;9;2;9;4;9;3;9;1002;9;2;9;4;9;3;9;101;1;9;9;4;9;3;9;101;1;9;9;4;9;99;3;9;101;2;9;9;4;9;3;9;102;2;9;9;4;9;3;9;1002;9;2;9;4;9;3;9;1001;9;2;9;4;9;3;9;1001;9;2;9;4;9;3;9;1001;9;2;9;4;9;3;9;1001;9;1;9;4;9;3;9;1001;9;2;9;4;9;3;9;1001;9;2;9;4;9;3;9;102;2;9;9;4;9;99 |]
-    let max = getSearchspace 5
+    let (input, mode) = match argv with
+                        | [| path; mode |] -> (readInput path, match mode with
+                                                               | "normal" -> AmplifyMode.Normal
+                                                               | "feedback" -> AmplifyMode.Feedback
+                                                               | _ -> AmplifyMode.Normal)
+                        | _ -> failwithf "Usage: dotnet run <path-to-input-file> <mode? := normal|feedback>"
+    let max = match mode with
+              | AmplifyMode.Normal -> getSearchspace 5
+              | AmplifyMode.Feedback -> getSearchspaceFeedback 5
     let initialState = { memory = input
                          ip = 0
                          input = []
-                         output = None }
-    printfn "Amplified output: %d" (calculateLargestResult initialState max)
+                         output = None
+                         mode = mode }
+    printfn "Amplified output: %d" (calculateLargestResult initialState max).value
     0
