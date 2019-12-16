@@ -28,6 +28,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day8-SpaceImageFormat", "Da
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day8-SpaceImageFormat.Tests", "Day8-SpaceImageFormat.Tests\Day8-SpaceImageFormat.Tests.fsproj", "{10CB030E-31F5-4A10-AEE5-7E191F60C9D5}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day9-SensorBoost", "Day9-SensorBoost\Day9-SensorBoost.fsproj", "{6D0D6EF7-7830-4312-8F25-666ABB3F5E73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,5 +92,9 @@ Global
 		{10CB030E-31F5-4A10-AEE5-7E191F60C9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10CB030E-31F5-4A10-AEE5-7E191F60C9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10CB030E-31F5-4A10-AEE5-7E191F60C9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D0D6EF7-7830-4312-8F25-666ABB3F5E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D0D6EF7-7830-4312-8F25-666ABB3F5E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D0D6EF7-7830-4312-8F25-666ABB3F5E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D0D6EF7-7830-4312-8F25-666ABB3F5E73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

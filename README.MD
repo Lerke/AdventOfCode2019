@@ -12,4 +12,5 @@ With the goal of experimenting a bit with new languages and tools!
 |  5  | F#       | :star2: :star2: | [Day5-SunnyWithAChanceOfAsteroids](https://github.com/Lerke/AdventOfCode2019/tree/master/Day5-SunnyWithAChanceOfAsteroids) | N/A |
 |  6  | F#       | :star2: :star2: | [Day6-UniversalOrbitMap](https://github.com/Lerke/AdventOfCode2019/tree/master/Day6-UniversalOrbitMap) | N/A |
 |  7  | F#       | :star2: :star2: | [Day7-AmplificationCircuit](https://github.com/Lerke/AdventOfCode2019/tree/master/Day7-AmplificationCircuit) | [Day7-AmplificationCircuit.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day7-AmplificationCircuit.Tests) |
-|  8  | F#       | :star2: | [Day8-SpaceImageFormat](https://github.com/Lerke/AdventOfCode2019/tree/master/Day8-SpaceImageFormat) | [Day8-SpaceImageFormat.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day8-SpaceImageFormat.Tests) |
+|  8  | F#       | :star2: :star2: | [Day8-SpaceImageFormat](https://github.com/Lerke/AdventOfCode2019/tree/master/Day8-SpaceImageFormat) | [Day8-SpaceImageFormat.Tests](https://github.com/Lerke/AdventOfCode2019/tree/master/Day8-SpaceImageFormat.Tests) |
+|  9  | F#       |  | [Day9-SensorBoost](https://github.com/Lerke/AdventOfCode2019/tree/master/Day9-SensorBoost) | N/A |
